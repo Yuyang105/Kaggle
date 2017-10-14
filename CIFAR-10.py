@@ -1,9 +1,6 @@
 
 # coding: utf-8
 
-# In[1]:
-
-
 # 如果训练下载的Kaggle的完整数据集，把下面改False
 demo = False
 if demo:
@@ -11,10 +8,6 @@ if demo:
     for fin in ['train_tiny.zip', 'test_tiny.zip', 'trainLabels.csv.zip']:
         with zipfile.ZipFile('../data/kaggle_cifar10/' + fin, 'r') as zin:
             zin.extractall('../data/kaggle_cifar10/')
-
-
-# In[2]:
-
 
 import os
 import shutil
@@ -62,8 +55,6 @@ def reorg_cifar10_data(data_dir, label_file, train_dir, test_dir, input_dir, val
                     os.path.join(data_dir, input_dir, 'test', 'unknown'))
 
 
-# In[3]:
-
 
 if demo:
     # 注意：此处使用小训练集为便于网页编译。Kaggle的完整数据集应包括5万训练样本。
@@ -83,8 +74,6 @@ input_dir = 'train_valid_test'
 valid_ratio = 0.1
 reorg_cifar10_data(data_dir, label_file, train_dir, test_dir, input_dir, valid_ratio)
 
-
-# In[4]:
 
 
 from mxnet import autograd
@@ -146,8 +135,6 @@ test_data = loader(test_ds, batch_size, shuffle=False, last_batch='keep')
 # 交叉熵损失函数。
 softmax_cross_entropy = gluon.loss.SoftmaxCrossEntropyLoss()
 
-
-# In[6]:
 
 
 from mxnet.gluon import nn
@@ -218,8 +205,6 @@ def get_net(ctx):
     return net
 
 
-# In[7]:
-
 
 import datetime
 import sys
@@ -262,8 +247,6 @@ def train(net, train_data, valid_data, num_epochs, lr, wd, ctx, lr_period, lr_de
         print(epoch_str + time_str + ', lr ' + str(trainer.learning_rate))
 
 
-# In[8]:
-
 
 ctx = utils.try_gpu()
 num_epochs = 1
@@ -277,8 +260,6 @@ net.hybridize()
 train(net, train_data, valid_data, num_epochs, learning_rate, 
       weight_decay, ctx, lr_period, lr_decay)
 
-
-# In[9]:
 
 
 import numpy as np
@@ -300,9 +281,6 @@ sorted_ids.sort(key = lambda x:str(x))
 df = pd.DataFrame({'id': sorted_ids, 'label': preds})
 df['label'] = df['label'].apply(lambda x: train_valid_ds.synsets[x])
 df.to_csv('submission.csv', index=False)
-
-
-# In[ ]:
 
 
 

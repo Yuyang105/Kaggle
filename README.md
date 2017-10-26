@@ -1,4 +1,4 @@
 # Kaggle
 For Kaggle Competitions ;)
 
-CIFAR-10 Score: 0.93490
+CIFAR-10 Score: 0.93550
